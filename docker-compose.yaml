@@ -2,7 +2,8 @@ version: "3.8"
 
 services:
   web:
-    container_name: "web"
+    container_name: "nginx_container"
+#    build: для докер файла
     image: nginx:latest
     ports:
       - "8080:80"
@@ -12,25 +13,23 @@ services:
       - mynetwork
 
   redis:
-    container_name: "redis_cont"
+    container_name: "redis_container"
     image: redis:latest
     networks:
       - mynetwork
 
   mysql:
-    container_name: "mysql"
+    container_name: "mysql_db_container"
     image: mysql:8.0
     environment:
-      MSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: mydatabase
+      MYSQL_ROOT_PASSWORD: rootpassword123
+      MYSQL_DATABASE: mydb
       MYSQL_USER: user
-      MYSQL_PASSWORD: user_password
-
+      MYSQL_PASSWORD: userpassword
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
       - mynetwork
-
 
 volumes:
   mysql_data:
