@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  web:
+    container_name: "web"
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/usr/share/nginx/html
+    networks:
+      - mynetwork
+
+  redis:
+    container_name: "redis"
+    image: redis:latest
+    networks:
+      - mynetwork
+
+  mysql:
+    container_name: "mysql"
+    image: mysql:8.0
+    environment:
+      MSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user_password
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - mynetwork
+
+
+volumes:
+  mysql_data:
+
+networks:
+  mynetwork:
